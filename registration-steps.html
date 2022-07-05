@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./styles/main.css">
+</head>
+<body>
+<div id="app" class="app">
+    <p class="logo">LOGO</p>
+    <div class="container--main">
+        <div class="content">
+            <div class="content-default-box">
+                <div id="step-1" class="registration-step">
+                    <div class="input-form">
+                        <label class="input">
+                            <span>Регистрация</span>
+                            <input type="text" placeholder="Ваше имя">
+                        </label>
+                        <label class="input input--without-label">
+                            <input type="number" placeholder="Номер телефона">
+                        </label>
+                        <button class="btn btn-normal">
+                            Далее
+                        </button>
+                    </div>
+                </div>
+                <div id="step-2" class="registration-step">
+                    <div class="input-form">
+                        <label class="input">
+                            <span>Укажите город</span>
+                            <input type="text" placeholder="Город">
+                        </label>
+                        <label class="input input--textarea">
+                            <span>
+                                Что нужно сделать ?
+                            </span>
+                            <textarea placeholder="Опишите что нужно сделать"></textarea>
+                        </label>
+                        <button class="btn btn-normal">
+                            Далее
+                        </button>
+                    </div>
+                </div>
+                <div id="step-3" class="registration-step show">
+                    <p>Супер! Теперь добавьте свой автомобиль</p>
+                    <div class="input-form search-forms">
+                        <label class="input input--without-label">
+                            <input type="text" placeholder="Марка авто">
+                            <div class="input input-search">
+                                <input onkeyup="searching(this)" type="search" id="marks"/>
+                                <div class="search-result">
+
+                                </div>
+                            </div>
+                            <input onkeyup="searching(mark, this)" type="search" id="model" placeholder="Модель авто">
+                            <input type="text" placeholder="Год выпуска">
+                            <input type="text" placeholder="Объем">
+                            <input type="text" placeholder="Вид топлива">
+                            <input type="text" placeholder="Коробка передач">
+                        </label>
+                        <button class="btn btn-normal">
+                            Далее
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script>
+    let apiKey = '?api_key=L78JcJiNE4pDYT9Fq1B4JM8QKYHAfStN4lack8or';
+    let settings = `https://developers.ria.com/auto/categories/1/`;
+
+
+    const search = (e) => {
+        let results = [];
+
+        fetch(settings, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then(data => {
+                let allResults = data;
+                for (let i = 0; i < allResults.length; i++) {
+                    results.push(allResults[i].name);
+                }
+            })
+    }
+
+    const getLog = (matches) => {
+        console.log(matches)
+    }
+
+    const searching = (inputSearch) => {
+        let searchId = inputSearch.id;
+        // inputSearch.id ? (search(searchId), console.log(inputSearch.id)) : null
+        if (!searchId) return null
+        const inputValue = inputSearch.value;
+        const regex = new RegExp(inputValue, 'gi');
+        let dataBase = settings + searchId + apiKey;
+
+        fetch(dataBase, {
+            method: "get"
+        })
+            .then(response => response.json())
+            .then((data) => {
+                const allResults = data;
+                const matches = data => data.match(regex);
+                getLog(matches);
+            })
+    }
+
+
+
+</script>
+</body>
+</html>
