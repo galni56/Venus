@@ -69,13 +69,17 @@
         </div>
     </div>
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"></script>
 <script>
+
     let apiKey = '?api_key=L78JcJiNE4pDYT9Fq1B4JM8QKYHAfStN4lack8or';
     let settings = `https://developers.ria.com/auto/categories/1/`;
 
 
-    const search = (e) => {
+ /*   const search = (e) => {
         let results = [];
 
         fetch(settings, {
@@ -88,29 +92,49 @@
                     results.push(allResults[i].name);
                 }
             })
-    }
+    }*/
+
+    // inputSearch.id ? (search(searchId), console.log(inputSearch.id)) : null
+
 
     const getLog = (matches) => {
         console.log(matches)
     }
 
     const searching = (inputSearch) => {
-        let searchId = inputSearch.id;
-        // inputSearch.id ? (search(searchId), console.log(inputSearch.id)) : null
+        const searchId = inputSearch.id,
+              inputValue = inputSearch.value.toLowerCase(),
+              result_box = document.getElementsByClassName('search-result'),
+              search_result_item = `<div class="search-result_item">%name</div>`;
+        let render = a => result_box.innerHTML = a.map(e => search_result_item.replace('%name', e)).join(`\n`);
         if (!searchId) return null
-        const inputValue = inputSearch.value;
-        const regex = new RegExp(inputValue, 'gi');
+        // const regex = new RegExp(inputValue, 'gi');
         let dataBase = settings + searchId + apiKey;
+        let results = [];
+
+        function generate(y) {
+            $('<div class="alert-message">Новый текст сообщения.</div>')
+        }
 
         fetch(dataBase, {
             method: "get"
         })
             .then(response => response.json())
             .then((data) => {
-                const allResults = data;
-                const matches = data => data.match(regex);
-                getLog(matches);
+                // const allResults = data;
+                results.push(data);
+                for (let i = 0; i < data.length; i++) {
+                    // ewwdwd = results.filter(e => e.toLowerCase().startsWith(inputValue));
+                    // console.log(results.length)
+                    // console.log(ewwdwd.length)
+                    // if (results.length === ewwdwd.length ) {
+                        // $(result_box).append(`<div class="search-result_item">${ewwdwd}</div>`)
+                        // console.log(ewwdwd)
+                    // }
+
+                }
             })
+
     }
 
 
