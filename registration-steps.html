@@ -12,7 +12,7 @@
     <div class="container--main">
         <div class="content">
             <div class="content-default-box">
-                <div id="step-1" class="registration-step">
+                <div id="step-1" class="registration-step show">
                     <div class="input-form">
                         <label class="input">
                             <span>Регистрация</span>
@@ -21,7 +21,7 @@
                         <label class="input input--without-label">
                             <input type="number" placeholder="Номер телефона">
                         </label>
-                        <button class="btn btn-normal">
+                        <button class="btn btn-normal btn-next" data-attr="step-2">
                             Далее
                         </button>
                     </div>
@@ -38,12 +38,12 @@
                             </span>
                             <textarea placeholder="Опишите что нужно сделать"></textarea>
                         </label>
-                        <button class="btn btn-normal">
+                        <button class="btn btn-normal btn-next step-3" data-attr="step-3">
                             Далее
                         </button>
                     </div>
                 </div>
-                <div id="step-3" class="registration-step show">
+                <div id="step-3" class="registration-step">
                     <p>Супер! Теперь добавьте свой автомобиль</p>
                     <div class="input-form search-forms">
                         <div class="input input--without-label">
@@ -72,18 +72,32 @@
         src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
         crossorigin="anonymous"></script>
+<script src="registration.js"></script>
 <script>
 
+    //
+    // ************** ДАННЫЙ КОД НЕ ЗАВЕРШЕН **************
+    //
+
+    //Разделение ключа апи для удобной манипуляции
     const apiKey = '?api_key=L78JcJiNE4pDYT9Fq1B4JM8QKYHAfStN4lack8or',
           settings = `https://developers.ria.com/auto/categories/1/`,
-          $search_result_close = $('.search-result');
+          //Тестовая часть
+          search_result_close = $('.search-result');
 
+    //Пустой массив для манипуляции данных с апи.
     let result = [];
 
+    //Отображение списка из апи
     function showList (e,i,v) {
+        //Создание элемента для заполнение списка
         let search_result_item = document.createElement("div");
+
+        //Выбираем элемент для вывода списка по нужному инпуту. V - часть айди инпута
         let searchContainer = document.getElementById( v + '-result' )
 
+        // Задаем класс, отображаем список, вставляем результат в список, вставляем АЙди Марки авто
+        // заполняем данные с апи в нновый созданный элемент
         search_result_item.className = 'search-result__item'
         searchContainer.style.display = 'block';
         searchContainer.appendChild(search_result_item);
@@ -91,42 +105,54 @@
         $(search_result_item).html(e);
     }
 
+    //Тестовая часть
     const filterInput = (e) => {
         console.log(e);
     }
 
+    // Функция на инпуте
     const searching = (inputSearch) => {
-
+        // Берем айди нипута, и значения.
         const searchId = inputSearch.id,
               inputValue = inputSearch.value.toLowerCase();
 
+        //Проверка на нужный инпут, во избежания лишней нагрузки.
         if (!searchId) return null
 
+        //Если инпут пустой - отображаем весь список с АПИ
         if (!inputValue) {
 
+            //Подставляем айди инпута  *например МАРКА* в апи.
             let dataBase = settings + searchId + apiKey;
 
+            //Получение списка
             fetch(dataBase, {
                 method: "get"
             })
             .then(response => response.json())
             .then((data) => {
                 for (let i = 0; i < data.length; i++) {
+                    //Вставляем каждое значние в пустой массив (только название марки)
                     result.push(data[i].name);
+
+                    //Записываем в переменные название и Айди данных - для следующих манипуляций.
                     let markName = data[i].name;
                     let markValue = data[i].value;
+
+                    //Передаем все данные
                     showList(markName,markValue,searchId)
                 }
             })
-            console.log(result)
         } else {
+            //Тестовая функция
             filterInput(result)
         }
     }
 
-    let modelChoose = document.getElementsByClassName('search-result__item');
-
-    $('.modelChoose').on('click', function () {});
+    //Тестовая функция для обработки динамических элементов
+    $('.search-result__item').on('click', function() {
+        console.log($(this));
+    });
 
 
 </script>
