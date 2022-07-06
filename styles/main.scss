@@ -98,6 +98,34 @@ body {
         outline: none;
       }
     }
+
+    &-search {
+      position: relative;
+      .search-result {
+        display: none;
+        position: absolute;
+        top: 38px;
+        left: 0;
+        right: 0;
+        max-height: 160px;
+        overflow: auto;
+        background: #F2F2F2;
+        padding: 0 0 10px;
+
+        div {
+          padding: 5px 20px 5px;
+          margin-bottom: 5px;
+          cursor: pointer;
+          transition: 0.2s;
+
+          &:hover {
+            background: #ffffff;
+            color: black;
+            transition: 0.2s;
+          }
+        }
+      }
+    }
   }
 }
 

@@ -69,6 +69,27 @@ body {
     margin-bottom: 20px; }
     .input-form .input input:focus-visible {
       outline: none; }
+  .input-form .input-search {
+    position: relative; }
+    .input-form .input-search .search-result {
+      display: none;
+      position: absolute;
+      top: 38px;
+      left: 0;
+      right: 0;
+      max-height: 160px;
+      overflow: auto;
+      background: #F2F2F2;
+      padding: 0 0 10px; }
+      .input-form .input-search .search-result div {
+        padding: 5px 20px 5px;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: 0.2s; }
+        .input-form .input-search .search-result div:hover {
+          background: #ffffff;
+          color: black;
+          transition: 0.2s; }
 
 textarea {
   background: #F2F2F2;

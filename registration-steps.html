@@ -46,20 +46,19 @@
                 <div id="step-3" class="registration-step show">
                     <p>Супер! Теперь добавьте свой автомобиль</p>
                     <div class="input-form search-forms">
-                        <label class="input input--without-label">
-                            <input type="text" placeholder="Марка авто">
+                        <div class="input input--without-label">
                             <div class="input input-search">
-                                <input onkeyup="searching(this)" type="search" id="marks"/>
-                                <div class="search-result">
+                                <input onclick="searching(this)" type="search" id="marks" placeholder="Марка авто" />
+                                <div class="search-result" id="marks-result">
 
                                 </div>
                             </div>
-                            <input onkeyup="searching(mark, this)" type="search" id="model" placeholder="Модель авто">
+                            <input onkeyup="searching(mark, this)" type="search" id="model" placeholder="Модель авто" />
                             <input type="text" placeholder="Год выпуска">
                             <input type="text" placeholder="Объем">
                             <input type="text" placeholder="Вид топлива">
                             <input type="text" placeholder="Коробка передач">
-                        </label>
+                        </div>
                         <button class="btn btn-normal">
                             Далее
                         </button>
@@ -75,68 +74,59 @@
         crossorigin="anonymous"></script>
 <script>
 
-    let apiKey = '?api_key=L78JcJiNE4pDYT9Fq1B4JM8QKYHAfStN4lack8or';
-    let settings = `https://developers.ria.com/auto/categories/1/`;
+    const apiKey = '?api_key=L78JcJiNE4pDYT9Fq1B4JM8QKYHAfStN4lack8or',
+          settings = `https://developers.ria.com/auto/categories/1/`,
+          $search_result_close = $('.search-result');
 
+    let result = [];
 
- /*   const search = (e) => {
-        let results = [];
+    function showList (e,i,v) {
+        let search_result_item = document.createElement("div");
+        let searchContainer = document.getElementById( v + '-result' )
 
-        fetch(settings, {
-            method: "get"
-        })
-            .then(response => response.json())
-            .then(data => {
-                let allResults = data;
-                for (let i = 0; i < allResults.length; i++) {
-                    results.push(allResults[i].name);
-                }
-            })
-    }*/
+        search_result_item.className = 'search-result__item'
+        searchContainer.style.display = 'block';
+        searchContainer.appendChild(search_result_item);
+        search_result_item.setAttribute("id",i);
+        $(search_result_item).html(e);
+    }
 
-    // inputSearch.id ? (search(searchId), console.log(inputSearch.id)) : null
-
-
-    const getLog = (matches) => {
-        console.log(matches)
+    const filterInput = (e) => {
+        console.log(e);
     }
 
     const searching = (inputSearch) => {
+
         const searchId = inputSearch.id,
-              inputValue = inputSearch.value.toLowerCase(),
-              result_box = document.getElementsByClassName('search-result'),
-              search_result_item = `<div class="search-result_item">%name</div>`;
-        let render = a => result_box.innerHTML = a.map(e => search_result_item.replace('%name', e)).join(`\n`);
+              inputValue = inputSearch.value.toLowerCase();
+
         if (!searchId) return null
-        // const regex = new RegExp(inputValue, 'gi');
-        let dataBase = settings + searchId + apiKey;
-        let results = [];
 
-        function generate(y) {
-            $('<div class="alert-message">Новый текст сообщения.</div>')
-        }
+        if (!inputValue) {
 
-        fetch(dataBase, {
-            method: "get"
-        })
+            let dataBase = settings + searchId + apiKey;
+
+            fetch(dataBase, {
+                method: "get"
+            })
             .then(response => response.json())
             .then((data) => {
-                // const allResults = data;
-                results.push(data);
                 for (let i = 0; i < data.length; i++) {
-                    // ewwdwd = results.filter(e => e.toLowerCase().startsWith(inputValue));
-                    // console.log(results.length)
-                    // console.log(ewwdwd.length)
-                    // if (results.length === ewwdwd.length ) {
-                        // $(result_box).append(`<div class="search-result_item">${ewwdwd}</div>`)
-                        // console.log(ewwdwd)
-                    // }
-
+                    result.push(data[i].name);
+                    let markName = data[i].name;
+                    let markValue = data[i].value;
+                    showList(markName,markValue,searchId)
                 }
             })
-
+            console.log(result)
+        } else {
+            filterInput(result)
+        }
     }
 
+    let modelChoose = document.getElementsByClassName('search-result__item');
+
+    $('.modelChoose').on('click', function () {});
 
 
 </script>
