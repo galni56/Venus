@@ -1,4 +1,6 @@
 @import url('http://fonts.cdnfonts.com/css/gotham');
+@import "buttons";
+@import "inputs";
 
 body {
   font-family: 'Gotham', sans-serif;
@@ -72,91 +74,3 @@ body {
   display: block;
 }
 
-
-
-.input-form {
-  display: flex;
-  flex-direction: column;
-  font-weight: 600;
-  margin-bottom: 30px;
-
-  .input {
-
-    span {
-      display: block;
-      font-size: 20px;
-      margin-bottom: 10px;
-    }
-    input {
-      font-size: 16px;
-      border: none;
-      padding: 10px 20px;
-      background: #F2F2F2;
-      width: 100%;
-      margin-bottom: 20px;
-      &:focus-visible {
-        outline: none;
-      }
-    }
-
-    &-search {
-      position: relative;
-      .search-result {
-        display: none;
-        position: absolute;
-        top: 38px;
-        left: 0;
-        right: 0;
-        max-height: 160px;
-        overflow: auto;
-        background: #F2F2F2;
-        padding: 0 0 10px;
-
-        div {
-          padding: 5px 20px 5px;
-          margin-bottom: 5px;
-          cursor: pointer;
-          transition: 0.2s;
-
-          &:hover {
-            background: #ffffff;
-            color: black;
-            transition: 0.2s;
-          }
-        }
-      }
-    }
-  }
-}
-
-textarea {
-  background: #F2F2F2;
-  width: 100%;
-  min-height: 250px;
-  margin-bottom: 30px;
-  font-family: 'Gotham', sans-serif;
-  font-size: 16px;
-  padding: 10px 15px;
-  border: none;
-  resize: none;
-  &:focus-visible {
-    outline: none;
-  }
-}
-
-.btn {
-  padding: 5px 15px;
-  background: #F2F2F2;
-  margin-bottom: 30px;
-  border: none;
-  color: #AEAEAE;
-  cursor: pointer;
-  min-height: 50px;
-
-  img {
-    max-width: 40px;
-  }
-  span {
-    margin: auto 0 auto 15px;
-  }
-}
